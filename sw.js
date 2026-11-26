@@ -1,5 +1,5 @@
 'use strict';
-const CACHE='bookscout-shell-v9';
+const CACHE='bookscout-shell-v10';
 const root=new URL('./',self.location.href);
 const shell=['./','./index.html','./backup.js','./isbn.js','./scanner.js','./discovery.js','./compare.js','./apple.js','./theme.js','./manifest.webmanifest','./icon.svg'].map(p=>new URL(p,root).href);
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(shell))));
