@@ -55,3 +55,7 @@ Matching records are grouped by validated ISBN or normalized matching title and 
 ## Progressive search and retries
 
 Providers run independently; results, group ordering and provider statuses update as requests finish. Failed sources have individual Retry buttons, while successful results remain visible. Superseded searches and changed storefronts cannot update the current result list or price history. A pending filter view indicates that additional providers are still searching. No persistent result cache is introduced; each search fetches fresh source metadata. Live browser timing and rendering still need verification.
+
+## Catalog cache and shareable searches
+
+Successful nonempty catalog results from Open Library, Gutenberg, Wikisource, DOAB and OAPEN can be reused for five minutes in the current tab, with at most 40 entries. Cache keys include query, provider and storefront. Price sources and Internet Archive manifest checks are always fresh; failed or empty results are not cached. Cached sources are labeled, and Refresh all sources bypasses the cache. No persistent or cross-device catalog storage is used. Share search generates a URL containing only the current query and country; opening that URL starts a new search with the recipient's selected source options. The browser clipboard is optional; a selectable URL is available if copying fails.
