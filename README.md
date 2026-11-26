@@ -27,3 +27,7 @@ Use the optional free-ebook search to request Google's documented free catalog i
 ## Price comparison and basket
 
 Saved books now have a unified dated offer list and a basket subtotal by country and format. Shipping is included for manual quotes; the newest quote for each store/format is used rather than a stale historic minimum. The basket defaults to records no older than seven days, explicitly reports missing prices, and is an estimate, not a checkout total. No automatic print-store prices or background polling are provided.
+
+## Experimental Apple Books price lookup
+
+Enable the Apple Books option to request the documented iTunes Search API (https://performance-partners.apple.com/search-api). ISBN searches use the lookup endpoint. Results are separate digital editions with price only when a numeric price and matching storefront currency are returned. An ISBN is not inferred from the lookup response; prices are not recorded in Google Books watch history. Apple Books URLs must match the requested storefront and book ID. No Apple artwork or previews are used. Browser cross-origin restrictions may prevent direct JSON requests: if so the source reports unavailable; no proxy or remote script execution is used. The API has rate limits; the option is off by default. Physical shop prices remain manual. Live compatibility has not yet been verified.
