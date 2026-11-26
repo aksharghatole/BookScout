@@ -64,6 +64,14 @@ async function main(){
   assert.equal(googleCalls,2);assert.equal(gutenbergCalls,2);
   await page.setViewportSize({width:390,height:844});await page.locator('[data-filter=free]').click();await page.locator('#results .book').first().waitFor({state:'visible'});
   await page.reload();assert.match(await page.locator('#savedCount').textContent(),/\(1\)/);
+  await page.locator('#library > summary').click();await page.locator('.shelf-panel > summary').click();
+  assert.equal(await page.locator('.shelf-links a').count(),2);
+  await page.locator('.reading-progress').fill('42');await page.getByRole('button',{name:'Save progress',exact:true}).click();
+  assert.match(await page.locator('.shelf-panel summary').textContent(),/42%/);
+  await page.reload();await page.locator('#library > summary').click();await page.locator('.shelf-panel > summary').click();
+  assert.equal(await page.locator('.reading-progress').inputValue(),'42');
+  assert.equal(await page.locator('.shelf-links a').count(),2);
+  console.log('PASS: reading progress and access links persist after reload');
   assert.deepEqual(errors,[],'Browser must not throw uncaught exceptions');
   console.log('PASS: save persistence, share URL, refresh and mobile viewport interaction');
   await context.close();

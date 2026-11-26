@@ -11,6 +11,8 @@ function validateBackup(data) {
     if(!obj(b)||!str(b.key,2000)||!b.key||keys.has(b.key)||!str(b.title,1000)||!b.title||!str(b.author,2000)||!str(b.isbn,13)||!/^(\d{13})?$/.test(b.isbn))fail();
     keys.add(b.key);
     const result={key:b.key,title:b.title,author:b.author,isbn:b.isbn,watch:{}};
+    if(b.readingProgress!==undefined){if(!Number.isInteger(b.readingProgress)||b.readingProgress<0||b.readingProgress>100)fail();result.readingProgress=b.readingProgress;}
+    if(b.accessLinks!==undefined){if(!Array.isArray(b.accessLinks)||b.accessLinks.length>40)fail();const shelf=typeof module==='object'&&module.exports?require('./links.js'):globalThis.BookScoutLinks;result.accessLinks=shelf.cleanShelfLinks(b.accessLinks);}
     if(b.watch!==undefined&&!obj(b.watch))fail();
     for(const region of ["IN","US","GB"]){
       const w=b.watch?.[region];if(w===undefined)continue;if(!obj(w))fail();
