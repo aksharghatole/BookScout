@@ -19,4 +19,13 @@ async function checkLink(url,fetcher,signal){
  try{const response=await fetcher(url,{method:'HEAD',mode:'cors',credentials:'omit',redirect:'error',referrerPolicy:'no-referrer',cache:'no-store',signal:local.signal});return classifyResponse(response);}catch{return 'unverified';}finally{clearTimeout(timer);signal?.removeEventListener('abort',stop);}
 }
 async function checkBatch(links,{fetcher,signal,onUpdate=()=>{}}){const unique=[...new Set(links.map(x=>x.url).filter(approvedUrl))].slice(0,12);let cursor=0;await Promise.all(Array.from({length:Math.min(3,unique.length)},async()=>{while(cursor<unique.length&&!signal?.aborted){const url=unique[cursor++],status=await checkLink(url,fetcher,signal);if(!signal?.aborted)onUpdate(url,status);}}));}
-const links={approvedUrl,collectLinks,exportCsv,classifyResponse,checkLink,checkBatch};if(typeof module==='object'&&module.exports)module.exports=links;else globalThis.BookScoutLinks=links;
+function cleanShelfLinks(value){
+ if(!Array.isArray(value))return [];
+ const result=[],seen=new Set();for(const x of value.slice(0,40)){
+  if(!x||typeof x.url!=='string'||x.url.length>2048||!['read','pdf','epub','txt','mobi'].includes(x.kind)||!['IN','US','GB'].includes(x.region)||typeof x.source!=='string'||!x.source.trim()||x.source.length>100||typeof x.savedAt!=='string'||x.savedAt.length>40||!Number.isFinite(Date.parse(x.savedAt)))continue;
+  const url=approvedUrl(x.url);if(!url)continue;const key=JSON.stringify([url,x.kind,x.region]);if(seen.has(key))continue;seen.add(key);result.push({url,kind:x.kind,source:x.source,region:x.region,savedAt:x.savedAt});
+ }return result;
+}
+function captureShelfLinks(book,region,at){return cleanShelfLinks(collectLinks([book]).map(x=>({url:x.url,kind:x.kind,source:x.source,region,savedAt:at})));}
+function readingProgress(value){return Number.isInteger(value)&&value>=0&&value<=100?value:0;}
+const links={approvedUrl,collectLinks,exportCsv,classifyResponse,checkLink,checkBatch,cleanShelfLinks,captureShelfLinks,readingProgress};if(typeof module==='object'&&module.exports)module.exports=links;else globalThis.BookScoutLinks=links;
