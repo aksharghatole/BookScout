@@ -33,7 +33,7 @@ function discoveryCategory(name){
  return 'ebooks';
 }
 function filterDiscovery(items,category){return category==='all'?items:items.filter(x=>x.category===category);}
-const sourceDefaults=Object.freeze({expandFree:false,expandArchive:true,expandWiki:true,expandAcademic:false,expandApple:false,groupMatches:true});
+const sourceDefaults=Object.freeze({expandFree:false,expandArchive:true,expandWiki:true,expandAcademic:false,expandApple:false,expandAlternatives:true,groupMatches:true});
 function sourcePreferences(value){const prefs={...sourceDefaults};if(value&&typeof value==='object'&&!Array.isArray(value))for(const key of Object.keys(prefs))if(Object.prototype.hasOwnProperty.call(value,key)&&typeof value[key]==='boolean')prefs[key]=value[key];return prefs;}
 function trustedLink(value,source){
  if(typeof value!=='string'||!value||/[\s\\]/.test(value))return '';
