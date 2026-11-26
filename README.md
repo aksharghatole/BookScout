@@ -23,3 +23,7 @@ Use a printed ISBN, supported browser camera scanner, or barcode photo. Camera a
 ## More discovery options
 
 Use the optional free-ebook search to request Google's documented free catalog in addition to the usual search; only region-verified free results are included. Gutenberg searches are no longer restricted to English. Standard Ebooks, DOAB, Google full-view search and BookFinder are external discovery links, not imported offers; check title, edition and local access. Choose system, light or dark appearance in the header. Theme preference stays on this device.
+
+## Price comparison and basket
+
+Saved books now have a unified dated offer list and a basket subtotal by country and format. Shipping is included for manual quotes; the newest quote for each store/format is used rather than a stale historic minimum. The basket defaults to records no older than seven days, explicitly reports missing prices, and is an estimate, not a checkout total. No automatic print-store prices or background polling are provided.

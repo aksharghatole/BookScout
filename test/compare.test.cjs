@@ -1,0 +1,7 @@
+const test=require('node:test'),assert=require('node:assert/strict'),{compareOffers,basket}=require('../compare.js'),fs=require('node:fs');
+const now=Date.parse('2026-11-26T12:00:00Z'),recent='2026-11-25T12:00:00Z',old='2026-11-01T12:00:00Z';
+const book={key:'a',title:'Book A',watch:{IN:{history:[{amount:100,at:old},{amount:220,at:recent}],quotes:[{store:'Shop',format:'used',price:100,shipping:80,at:recent},{store:' shop ',format:'used',price:50,shipping:0,at:old},{store:'Other',format:'new',price:160,shipping:40,at:old}]},US:{quotes:[{store:'US Shop',format:'new',price:3,shipping:0,at:recent}]}}};
+test('latest offer per seller and format; shipping included',()=>assert.deepEqual(compareOffers(book,'IN','all',now).map(x=>x.total),[180,200,220]));
+test('filter by country, format, recency and missing prices',()=>{assert.equal(basket([book,{key:'b',title:'B'}],'IN','new',true,now).missing,2);assert.equal(basket([book],'IN','used',true,now).total,180);assert.equal(basket([book],'US','new',true,now).total,3);assert.equal(basket([book],'GB','all',false,now).covered,0);});
+test('invalid quote data ignored',()=>assert.deepEqual(compareOffers({watch:{IN:{quotes:[{store:'Bad',format:'used',price:-1,shipping:0,at:recent}]} }},'IN','all',now),[]));
+test('comparison script cached and linked',()=>{assert.ok(fs.readFileSync('sw.js','utf8').includes("'./compare.js'"));assert.ok(fs.readFileSync('index.html','utf8').includes('src="./compare.js"'));});
