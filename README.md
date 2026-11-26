@@ -19,3 +19,7 @@ Export a JSON backup before switching browser/origin. Restore explicitly replace
 ## ISBN lookup
 
 Use a printed ISBN, supported browser camera scanner, or barcode photo. Camera and photo processing are local; no images are uploaded. BarcodeDetector and camera availability vary by browser. If unsupported, enter the ISBN manually. ISBN searches use Open Library's ISBN-keyed Books API and Google Books identifiers; title searches still return work-level catalog results. Binding is shown only if the source supplies it.
+
+## More discovery options
+
+Use the optional free-ebook search to request Google's documented free catalog in addition to the usual search; only region-verified free results are included. Gutenberg searches are no longer restricted to English. Standard Ebooks, DOAB, Google full-view search and BookFinder are external discovery links, not imported offers; check title, edition and local access. Choose system, light or dark appearance in the header. Theme preference stays on this device.
