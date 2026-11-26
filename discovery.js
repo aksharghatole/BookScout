@@ -17,9 +17,24 @@ function discovery(query){
  {name:'Scribble Hub',description:'Author-published web fiction and serials.',url:site('scribblehub.com')},
  {name:'ManyBooks',description:'Free and paid ebook catalog; confirm the offer.',url:site('manybooks.net')},
  {name:'Google Drive — licensed files',description:'Search for publicly indexed files with open-license terms. Check the uploader, license and exact edition before reading.',url:site('drive.google.com','("Creative Commons" OR "open access" OR "public domain")')},
+ {name:'Unglue.it',description:'Freely licensed ebooks; check available formats.',url:site('unglue.it')},
+ {name:'Open Textbook Library',description:'Openly licensed textbooks from the Open Education Network.',url:site('open.umn.edu/opentextbooks')},
+ {name:'Book Dash',description:'Openly licensed children’s picture books.',url:site('bookdash.org/books')},
+ {name:'Library of Congress',description:'Selected digitized public-domain books; check local rights.',url:site('loc.gov/collections/selected-digitized-books')},
  {name:'Author / publisher free editions',description:'Search the web for publisher or author-authorized open-access copies.',url:'https://www.google.com/search?q='+encodeURIComponent(q+' ("Creative Commons" OR "open access" OR "public domain") (publisher OR author)')}
- ];
+ ].map(item=>({...item,category:discoveryCategory(item.name)}));
 }
+function discoveryCategory(name){
+ if(['BookFinder'].includes(name))return 'buy';
+ if(['DOAB','OAPEN','OpenStax','Open Textbook Library'].includes(name))return 'academic';
+ if(['Royal Road','Scribble Hub'].includes(name))return 'fiction';
+ if(['Internet Archive','Library of Congress'].includes(name))return 'library';
+ if(['Google Drive — licensed files','Author / publisher free editions'].includes(name))return 'web';
+ return 'ebooks';
+}
+function filterDiscovery(items,category){return category==='all'?items:items.filter(x=>x.category===category);}
+const sourceDefaults=Object.freeze({expandFree:false,expandArchive:true,expandWiki:true,expandAcademic:false,expandApple:false,groupMatches:true});
+function sourcePreferences(value){const prefs={...sourceDefaults};if(value&&typeof value==='object'&&!Array.isArray(value))for(const key of Object.keys(prefs))if(Object.prototype.hasOwnProperty.call(value,key)&&typeof value[key]==='boolean')prefs[key]=value[key];return prefs;}
 function trustedLink(value,source){
  if(typeof value!=='string'||!value||/[\s\\]/.test(value))return '';
  const hosts=source==='gutenberg'?'(?:www\\.)?gutenberg\\.org':source==='google'?'(?:books\\.google\\.com|play\\.google\\.com|books\\.googleusercontent\\.com)':'(?!)';
@@ -52,4 +67,4 @@ function matchAccess(book,filter){
  return Array.isArray(book.accessLinks)&&book.accessLinks.some(x=>x.kind===filter);
 }
 function googleFreeUrl(query,region,exact){return 'https://www.googleapis.com/books/v1/volumes?q='+encodeURIComponent(exact?'isbn:'+exact:query)+'&country='+encodeURIComponent(region)+'&maxResults=20&printType=books&filter=free-ebooks';}
-const bookDiscovery={discovery,gutenbergAccess,googleAccess,matchAccess,googleFreeUrl};if(typeof module==='object'&&module.exports)module.exports=bookDiscovery;else globalThis.BookScoutDiscovery=bookDiscovery;
+const bookDiscovery={discovery,filterDiscovery,sourcePreferences,gutenbergAccess,googleAccess,matchAccess,googleFreeUrl};if(typeof module==='object'&&module.exports)module.exports=bookDiscovery;else globalThis.BookScoutDiscovery=bookDiscovery;
