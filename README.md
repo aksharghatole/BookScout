@@ -51,3 +51,7 @@ Enable the academic search option for DOAB and OAPEN REST catalog searches. The 
 ## Grouped search results
 
 Matching records are grouped by validated ISBN or normalized matching title and author. Grouping is conservative: records with unknown authors are not grouped solely by title. The group shows provider count, free-access count and formats, and preserves each source card's own links, declared rights, price, ISBN and save action. Different editions may appear in a work-level group; no price or access is transferred between records. Disable grouping to view individual cards. Filters operate on the source records before grouping. Price sorting uses the minimum recorded price in each visible group, with free-access records treated as zero for discovery ordering (not checkout quotes).
+
+## Progressive search and retries
+
+Providers run independently; results, group ordering and provider statuses update as requests finish. Failed sources have individual Retry buttons, while successful results remain visible. Superseded searches and changed storefronts cannot update the current result list or price history. A pending filter view indicates that additional providers are still searching. No persistent result cache is introduced; each search fetches fresh source metadata. Live browser timing and rendering still need verification.
