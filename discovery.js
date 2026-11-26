@@ -21,12 +21,15 @@ function discovery(query){
  {name:'Open Textbook Library',description:'Openly licensed textbooks from the Open Education Network.',url:site('open.umn.edu/opentextbooks')},
  {name:'Book Dash',description:'Openly licensed children’s picture books.',url:site('bookdash.org/books')},
  {name:'Library of Congress',description:'Selected digitized public-domain books; check local rights.',url:site('loc.gov/collections/selected-digitized-books')},
+ {name:'Open Book Publishers',description:'Publisher catalog of open-access scholarly books; check individual formats.',url:site('openbookpublishers.com')},
+ {name:'Pressbooks Directory',description:'Open educational books; check each book’s license and download options.',url:site('pressbooks.directory')},
+ {name:'Baen Free Library',description:'Publisher-authorized free fiction catalog; confirm current availability.',url:site('baen.com','free library')},
  {name:'Author / publisher free editions',description:'Search the web for publisher or author-authorized open-access copies.',url:'https://www.google.com/search?q='+encodeURIComponent(q+' ("Creative Commons" OR "open access" OR "public domain") (publisher OR author)')}
  ].map(item=>({...item,category:discoveryCategory(item.name)}));
 }
 function discoveryCategory(name){
  if(['BookFinder'].includes(name))return 'buy';
- if(['DOAB','OAPEN','OpenStax','Open Textbook Library'].includes(name))return 'academic';
+ if(['DOAB','OAPEN','OpenStax','Open Textbook Library','Open Book Publishers','Pressbooks Directory'].includes(name))return 'academic';
  if(['Royal Road','Scribble Hub'].includes(name))return 'fiction';
  if(['Internet Archive','Library of Congress'].includes(name))return 'library';
  if(['Google Drive — licensed files','Author / publisher free editions'].includes(name))return 'web';
