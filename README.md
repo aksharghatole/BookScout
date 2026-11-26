@@ -59,3 +59,7 @@ Providers run independently; results, group ordering and provider statuses updat
 ## Catalog cache and shareable searches
 
 Successful nonempty catalog results from Open Library, Gutenberg, Wikisource, DOAB and OAPEN can be reused for five minutes in the current tab, with at most 40 entries. Cache keys include query, provider and storefront. Price sources and Internet Archive manifest checks are always fresh; failed or empty results are not cached. Cached sources are labeled, and Refresh all sources bypasses the cache. No persistent or cross-device catalog storage is used. Share search generates a URL containing only the current query and country; opening that URL starts a new search with the recipient's selected source options. The browser clipboard is optional; a selectable URL is available if copying fails.
+
+## Source preferences and discovery categories
+
+Optional provider selections and grouped-results preference are remembered in browser local storage. Core catalog sources remain enabled. Use Search with selected sources to rerun with the chosen options, or Reset preferences to restore defaults. External discovery has category filters for ebooks, academic books, fiction, libraries, licensed public web files and price comparison. New destinations include Unglue.it, Open Textbook Library, Book Dash and Library of Congress selected digitized books. These are targeted searches only, not confirmed book matches or direct file links. Google Drive searches remain constrained to open-license terms; no Drive account access is requested.
