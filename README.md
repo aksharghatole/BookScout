@@ -1,5 +1,7 @@
 # BookScout
 
+[Run locally](#run-locally) · [Deployment](#publish-on-github-pages) · [Feature reference](#feature-reference)
+
 Free, client-side book discovery and price tracking. Search Google Books, Open Library and Project Gutenberg (Gutendex); compare legitimate free access and known digital prices. Retailer links are searches, not verified live quotes. Manual print/used quotes include shipping. Saved books, country-specific watch targets and price history stay in browser storage.
 
 ## Run locally
@@ -15,6 +17,11 @@ Open http://localhost:8000. No API key or build required. Run `node --test` for 
 After merging, open Settings → Pages → Build and deployment → Deploy from a branch → main / (root). The app is designed for subpath hosting. HTTPS or localhost is required for the service worker. On supported browsers use the install menu. The shell works offline after its first successful load; catalog searches need internet. Installation has not yet been verified on an Android device.
 
 Export a JSON backup before switching browser/origin. Restore explicitly replaces the existing saved library and history after confirmation. Price tracking requires manual rechecks; there are no scheduled alerts or live print prices. Free access is subject to local copyright rules.
+
+## Feature reference
+
+<details>
+<summary>Feature reference and limitations</summary>
 
 ## ISBN lookup
 
@@ -79,3 +86,5 @@ The GitHub Actions workflow runs the Node unit suite and a separate Playwright C
 ## Reading shelf
 
 Saving a result stores its allowlisted source-provided reading/download links with the storefront and capture date. The reading shelf offers manual progress from 0–100%, link removal and a Save current access links control on already saved results. Stored links are historical references, not live access verification; no books are downloaded or hosted locally. Shelf fields are optional in the existing backup format and validated during restore, maintaining compatibility with older backups. The browser smoke suite also verifies persistence of saved links and reading progress across reloads.
+
+</details>
