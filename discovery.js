@@ -24,14 +24,17 @@ function discovery(query){
  {name:'Open Book Publishers',description:'Publisher catalog of open-access scholarly books; check individual formats.',url:site('openbookpublishers.com')},
  {name:'Pressbooks Directory',description:'Open educational books; check each book’s license and download options.',url:site('pressbooks.directory')},
  {name:'Baen Free Library',description:'Publisher-authorized free fiction catalog; confirm current availability.',url:site('baen.com','free library')},
+ {name:'National Academies Press',description:'Publisher-authorized free research books and reports; check download availability.',url:site('nap.nationalacademies.org')},
+ {name:'HathiTrust',description:'Research library catalog with selected full-view editions; access varies by rights and region.',url:site('catalog.hathitrust.org')},
+ {name:'MIT Press Open Access',description:'Publisher catalog with open-access books; check the edition license.',url:site('direct.mit.edu/books')},
  {name:'Author / publisher free editions',description:'Search the web for publisher or author-authorized open-access copies.',url:'https://www.google.com/search?q='+encodeURIComponent(q+' ("Creative Commons" OR "open access" OR "public domain") (publisher OR author)')}
  ].map(item=>({...item,category:discoveryCategory(item.name)}));
 }
 function discoveryCategory(name){
  if(['BookFinder'].includes(name))return 'buy';
- if(['DOAB','OAPEN','OpenStax','Open Textbook Library','Open Book Publishers','Pressbooks Directory'].includes(name))return 'academic';
+ if(['DOAB','OAPEN','OpenStax','Open Textbook Library','Open Book Publishers','Pressbooks Directory','National Academies Press','MIT Press Open Access'].includes(name))return 'academic';
  if(['Royal Road','Scribble Hub'].includes(name))return 'fiction';
- if(['Internet Archive','Library of Congress'].includes(name))return 'library';
+ if(['Internet Archive','Library of Congress','HathiTrust'].includes(name))return 'library';
  if(['Google Drive — licensed files','Author / publisher free editions'].includes(name))return 'web';
  return 'ebooks';
 }
