@@ -88,6 +88,15 @@ async function main(){
   assert.equal(await page.locator('#savedList .saved-row').count(),1);
   assert.match(await page.locator('.shelf-panel summary').textContent(),/100%/);
   console.log('PASS: shelf status and text filters with quick completion');
+  await page.locator('#shelfSort').selectOption('title');
+  await page.locator('#shelfSearch').fill('no-such-book-xyz');
+  assert.equal(await page.locator('#savedList .saved-row').count(),0);
+  await page.locator('#clearShelfFilters').click();
+  assert.equal(await page.locator('#shelfSort').inputValue(),'recent');
+  assert.equal(await page.locator('#shelfFilter').inputValue(),'all');
+  assert.equal(await page.locator('#shelfSearch').inputValue(),'');
+  assert.equal(await page.locator('#savedList .saved-row').count(),1);
+  console.log('PASS: shelf filter reset');
   assert.deepEqual(errors,[],'Browser must not throw uncaught exceptions');
   console.log('PASS: save persistence, share URL, refresh and mobile viewport interaction');
   await context.close();
