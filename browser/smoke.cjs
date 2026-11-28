@@ -96,7 +96,14 @@ async function main(){
   assert.equal(await page.locator('#shelfFilter').inputValue(),'all');
   assert.equal(await page.locator('#shelfSearch').inputValue(),'');
   assert.equal(await page.locator('#savedList .saved-row').count(),1);
-  console.log('PASS: shelf filter reset');
+  await page.locator('#shelfAccess').selectOption('linked');
+  assert.equal(await page.locator('.saved-row').count(),1);
+  await page.locator('#shelfAccess').selectOption('missing');
+  assert.equal(await page.locator('.saved-row').count(),0);
+  await page.locator('#clearShelfFilters').click();
+  assert.equal(await page.locator('#shelfAccess').inputValue(),'all');
+  assert.equal(await page.locator('.saved-row').count(),1);
+  console.log('PASS: shelf filter reset and saved access filtering');
   assert.deepEqual(errors,[],'Browser must not throw uncaught exceptions');
   console.log('PASS: save persistence, share URL, refresh and mobile viewport interaction');
   await context.close();
